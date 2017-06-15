@@ -1,0 +1,40 @@
+<!--The whole content below can be removed with the new code.-->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class=" col-md-8 ">
+      <h2 class="text-center ">
+        {{title}}
+      </h2>
+    </div>
+    <div class="col-md-2 ">
+      <div *ngIf="!authentificated"><input #newUser (keyup.enter)="register(newUser.value)"></div>
+      <div *ngIf="authentificated"><button (click)="logout() " class="btn btn-info ">{{authentificated ? 'logout' : 'login'}}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col-md-10"></div>
+    <div class=" col-md-2">
+      <div *ngIf="authentificated ">You're logged in as {{userName}}</div>
+      <div *ngIf="!authentificated">Please log in</div>
+    </div>
+  </div>
+
+  <div *ngIf="authentificated " class="row ">
+    <div class="col-md-2"></div>
+    <div  class="col-md-10">
+      <textarea id="chatArea" rows="20"  cols="100" readonly>{{chat}}</textarea>
+    </div>
+  </div>
+
+    <div *ngIf="authentificated " class="row ">
+    <div class="col-md-2"></div>
+    <div  class="col-md-10">
+      <input #newMessage (keyup.enter)="addNewMessage(newMessage.value)" size="65">
+    </div>
+  </div>
+
+</div>
