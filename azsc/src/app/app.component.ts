@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AzureConnectorService } from "app/services/azure-connector.service";
+import { Response } from '@angular/http';
 
 @Component({
   selector: 'app-root',
@@ -23,9 +24,22 @@ export class AppComponent {
       this.userName = user;
 
       this.acs.retrieveToken(user);
+      this.getMessages();
+
     }
   }
 
+  getMessages() {
+    this.acs.getMessages().subscribe(
+      (msgs: any[]) => {
+        for (const msg of msgs) {
+          console.log(msg);
+          this.chat += msg.Dt + '::' + msg.Usr + '::' + msg.Msg + String.fromCharCode(13);
+        }
+      },
+      (error) => console.log(error)
+    );
+  }
   logout() {
     this.chat += this.userName + ' logged out' + String.fromCharCode(13);
     this.authentificated = false;
@@ -35,9 +49,7 @@ export class AppComponent {
 
   addNewMessage(msg: string) {
     if (msg) {
-
       this.chat += this.userName + ' said:' + msg + String.fromCharCode(13);
-
     }
   }
 }
