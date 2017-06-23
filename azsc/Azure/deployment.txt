@@ -1,0 +1,6 @@
+ng build prod
+
+copy \angular_azure_simple_chat\azsc\dist
+
+
+https://simplechathost.blob.core.windows.net/ng2/index.html

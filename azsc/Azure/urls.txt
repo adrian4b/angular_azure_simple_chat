@@ -1,0 +1,13 @@
+https://docs.microsoft.com/en-us/azure/azure-functions/functions-scenario-database-table-cleanup
+
+http://www.frankysnotes.com/2016/12/how-to-use-azure-function-app-to-crush.html
+
+https://dzone.com/articles/create-a-serverless-angular-app-with-azure-functio
+
+https://docs.microsoft.com/en-us/azure/azure-functions/functions-test-a-function
+
+
+https://docs.microsoft.com/en-us/azure/azure-functions/functions-scenario-database-table-cleanup
+
+https://azureplatform.azurewebsites.net/en-us/?utm_content=educational&utm_campaign=2017-06-21&utm_source=email-sendgrid&utm_term=58935&utm_medium=802578
+

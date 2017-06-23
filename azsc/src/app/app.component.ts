@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AzureConnectorService } from "app/services/azure-connector.service";
 import { Response } from '@angular/http';
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'app-root',
@@ -13,8 +14,13 @@ export class AppComponent {
   authentificated: boolean = false;
   userName: string = 'Someone else';
   chat: string = '';
+  newMessage = '';
+  timer = Observable.timer(2000, 5000);
 
-  constructor(private acs: AzureConnectorService) { }
+  subscription;
+  constructor(private acs: AzureConnectorService) {
+
+  }
 
   register(user: string) {
     if (user) {
@@ -25,13 +31,16 @@ export class AppComponent {
 
       this.acs.retrieveToken(user);
       this.getMessages();
-
+      this.subscription =  this.timer.subscribe(t => {
+        this.getMessages()
+      });
     }
   }
 
   getMessages() {
     this.acs.getMessages().subscribe(
       (msgs: any[]) => {
+        this.chat = '';
         for (const msg of msgs) {
           console.log(msg);
           this.chat += msg.Dt + '::' + msg.Usr + '::' + msg.Msg + String.fromCharCode(13);
@@ -40,16 +49,23 @@ export class AppComponent {
       (error) => console.log(error)
     );
   }
+  
   logout() {
-    this.chat += this.userName + ' logged out' + String.fromCharCode(13);
+    this.chat = '';
     this.authentificated = false;
     this.userName = '';
     this.token = '';
+    this.subscription.unsubscribe;
   }
 
-  addNewMessage(msg: string) {
+  sendMessage(msg: string) {
     if (msg) {
       this.chat += this.userName + ' said:' + msg + String.fromCharCode(13);
+      this.acs.sendMessage(msg).subscribe(
+        (response) => console.log(response),
+        (error) => console.log(error)
+      );
     }
+    this.newMessage = '';
   }
 }
